@@ -76,6 +76,8 @@
 
 ## SDK
 
+API 和用法见 [`packages/ext-sdk/README.md`](packages/ext-sdk/README.md)。
+
 ```ts
 import {
   createExtensionI18n,
