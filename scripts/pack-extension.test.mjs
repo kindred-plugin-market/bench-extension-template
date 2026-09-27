@@ -142,9 +142,7 @@ describe("extension authoring tools", () => {
 
   it("removes a partial ZIP when writing fails after opening the output", async () => {
     const root = tempDirectory("bench-ext-partial-zip-");
-    const sourcePath = join(root, "source.txt");
     const archivePath = join(root, "partial.zip");
-    writeFileSync(sourcePath, "source content");
     let partialWritten = false;
 
     const failingWriteStream = (destination, options) => {
@@ -167,13 +165,9 @@ describe("extension authoring tools", () => {
       return output;
     };
 
-    await expect(
-      writeZip(
-        [{ absolutePath: sourcePath, archivePath: "source.txt" }],
-        archivePath,
-        failingWriteStream,
-      ),
-    ).rejects.toThrow(/simulated archive write failure/);
+    await expect(writeZip([], archivePath, failingWriteStream)).rejects.toThrow(
+      /simulated archive write failure/,
+    );
     expect(partialWritten).toBe(true);
     expect(existsSync(archivePath)).toBe(false);
   });
