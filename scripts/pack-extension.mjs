@@ -361,16 +361,27 @@ function signManifest(manifest, tempDir, { keyPath, pubKeyPath, minisignBin }) {
   return readFileSync(signaturePath, "utf8").replace(/\r\n/g, "\n").trimEnd();
 }
 
-async function writeZip(files, destination) {
+export async function writeZip(
+  files,
+  destination,
+  createWriteStreamFn = createWriteStream,
+) {
   const archive = new ZipFile();
   for (const file of files)
     archive.addFile(file.absolutePath, file.archivePath);
-  const write = pipeline(
-    archive.outputStream,
-    createWriteStream(destination, { flags: "wx" }),
-  );
-  archive.end();
-  await write;
+  const output = createWriteStreamFn(destination, { flags: "wx" });
+  let outputOpened = false;
+  output.once("open", () => {
+    outputOpened = true;
+  });
+  try {
+    const write = pipeline(archive.outputStream, output);
+    archive.end();
+    await write;
+  } catch (error) {
+    if (outputOpened) rmSync(destination, { force: true });
+    throw error;
+  }
 }
 
 export async function packExtension({

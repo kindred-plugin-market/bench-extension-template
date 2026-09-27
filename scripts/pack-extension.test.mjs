@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { Writable } from "node:stream";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   mkdtempSync,
@@ -18,6 +19,7 @@ import {
   findBundleFiles,
   packExtension,
   validateManifest,
+  writeZip,
 } from "./pack-extension.mjs";
 
 const require = createRequire(import.meta.url);
@@ -136,6 +138,44 @@ describe("extension authoring tools", () => {
     expect(findBundleFiles(root).map((file) => file.archivePath)).toEqual([
       ".well-known",
     ]);
+  });
+
+  it("removes a partial ZIP when writing fails after opening the output", async () => {
+    const root = tempDirectory("bench-ext-partial-zip-");
+    const sourcePath = join(root, "source.txt");
+    const archivePath = join(root, "partial.zip");
+    writeFileSync(sourcePath, "source content");
+    let partialWritten = false;
+
+    const failingWriteStream = (destination, options) => {
+      expect(destination).toBe(archivePath);
+      expect(options).toEqual({ flags: "wx" });
+      const output = new Writable({
+        write(chunk, _encoding, callback) {
+          if (!partialWritten) {
+            writeFileSync(
+              destination,
+              chunk.subarray(0, Math.min(chunk.length, 8)),
+              { flag: "wx" },
+            );
+            partialWritten = true;
+          }
+          callback(new Error("simulated archive write failure"));
+        },
+      });
+      process.nextTick(() => output.emit("open", 1));
+      return output;
+    };
+
+    await expect(
+      writeZip(
+        [{ absolutePath: sourcePath, archivePath: "source.txt" }],
+        archivePath,
+        failingWriteStream,
+      ),
+    ).rejects.toThrow(/simulated archive write failure/);
+    expect(partialWritten).toBe(true);
+    expect(existsSync(archivePath)).toBe(false);
   });
 
   it("rejects expired metadata and invalid platform declarations before signing", () => {
