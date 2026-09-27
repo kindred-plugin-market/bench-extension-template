@@ -32,7 +32,15 @@
      --install-dir "$env:APPDATA/com.bench.app/extensions/quick-notes"
    ```
 
-   先退出已运行的 Bench，再以 `BENCH_EXT_DEV_MODE=1` 启动 Bench，并在插件中心打开该插件。开发模式跳过 market 签名校验，只用于本机调试；目标目录已存在时命令会拒绝覆盖。Windows PowerShell 可先执行 `$env:BENCH_EXT_DEV_MODE = "1"` 再启动 Bench。
+   先退出已运行的 Bench，再以 `BENCH_EXT_DEV_MODE=1` 启动 Bench，并在插件中心打开该插件。开发模式跳过 market 签名校验，只用于本机调试；目标目录已存在时命令会拒绝覆盖。
+
+   macOS 可在终端启动：
+
+   ```bash
+   open --env BENCH_EXT_DEV_MODE=1 -a Bench
+   ```
+
+   Windows PowerShell 可先执行 `$env:BENCH_EXT_DEV_MODE = "1"`，再从同一 PowerShell 会话启动 Bench 可执行文件，确保变量传给该进程。
 
 6. 发布包需安装 [minisign](https://github.com/jedisct1/minisign)，生成作者密钥：
 
