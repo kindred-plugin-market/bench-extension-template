@@ -1,0 +1,17 @@
+{
+  "name": "@bench/example",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --config vite.config.ts",
+    "build": "vite build --config vite.config.ts"
+  },
+  "dependencies": {
+    "@bench/ext-sdk": "workspace:*",
+    "@tauri-apps/api": "^2.11.1",
+    "i18next": "^26.4.2",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-i18next": "^17.0.14"
+  }
+}

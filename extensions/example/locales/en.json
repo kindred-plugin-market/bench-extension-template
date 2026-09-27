@@ -1,0 +1,10 @@
+{
+  "title": "Bench Extension Example",
+  "intro": "A small, working example of the host bridge, per-extension data, and localized UI.",
+  "connectionTitle": "Host connection",
+  "capabilities": "Available commands",
+  "dataDirectory": "Private data directory",
+  "loading": "Loading…",
+  "browserPreview": "Browser preview is available. Host data and IPC appear when Bench opens this extension.",
+  "footer": "Keep permissions minimal. The Bench host enforces the manifest ACL on every command."
+}

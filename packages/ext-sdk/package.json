@@ -1,0 +1,16 @@
+{
+  "name": "@bench/ext-sdk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Typed host bridge, i18n adapter, and local diagnostics for Bench extensions",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "types": "./src/index.ts",
+  "peerDependencies": {
+    "@tauri-apps/api": "^2.11.1",
+    "i18next": "^26.4.2",
+    "react-i18next": "^17.0.14"
+  }
+}

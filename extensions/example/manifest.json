@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 2,
+  "id": "example",
+  "version": "0.1.0",
+  "display": {
+    "en": "Bench Extension Example",
+    "zh": "Bench 插件示例"
+  },
+  "distribution": "bundled",
+  "entry": {
+    "index": "index.html"
+  },
+  "acl": {
+    "commands": []
+  },
+  "engines": {
+    "bench": "*"
+  }
+}

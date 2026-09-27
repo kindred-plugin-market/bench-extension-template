@@ -1,0 +1,10 @@
+{
+  "title": "Bench 插件示例",
+  "intro": "展示宿主 IPC、插件独立数据目录和本地化界面的最小可运行示例。",
+  "connectionTitle": "宿主连接",
+  "capabilities": "可用命令",
+  "dataDirectory": "私有数据目录",
+  "loading": "正在加载…",
+  "browserPreview": "可以先在浏览器预览；由 Bench 打开插件后才会显示宿主数据和 IPC。",
+  "footer": "只申请必要权限。Bench 宿主会在每次调用时检查 manifest ACL。"
+}
