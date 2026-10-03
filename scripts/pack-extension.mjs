@@ -203,7 +203,7 @@ export function validateManifest(manifest, id) {
       !Array.isArray(manifest.platforms) ||
       manifest.platforms.length === 0 ||
       manifest.platforms.some(
-        (platform) => !["macos", "windows", "linux"].includes(platform),
+        (platform) => !["macos", "windows"].includes(platform),
       ) ||
       new Set(manifest.platforms).size !== manifest.platforms.length
     ) {

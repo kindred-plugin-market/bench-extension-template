@@ -15,7 +15,7 @@
 
    新插件生成在 `extensions/quick-notes/`，包含 manifest、Vite、React 页面和中英文 locale。
 
-4. 修改 `extensions/quick-notes/src/`、`locales/` 与 `manifest.json`。打包前会校验 schema v2 的显示信息、ACL、入口、平台和过期时间；宿主仍会再次校验命令 ACL。
+4. 修改 `extensions/quick-notes/src/`、`locales/` 与 `manifest.json`。打包前会校验 schema v2 的显示信息、ACL、入口、平台和过期时间；`manifest.platforms` 目前只接受 `macos` / `windows`，省略时表示同时支持两者。Linux 尚未纳入 Bench 的构建与发布支持范围；宿主仍会再次校验平台与命令 ACL。
 5. 如需本地加载，生成未签名开发包并显式安装到 Bench 的插件目录：
 
    macOS：
