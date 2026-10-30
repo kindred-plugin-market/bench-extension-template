@@ -185,6 +185,18 @@ describe("extension authoring tools", () => {
     expect(() =>
       validateManifest({ ...manifest, platforms: [] }, "example"),
     ).toThrow(/platforms/);
+    expect(() =>
+      validateManifest({ ...manifest, platforms: ["linux"] }, "example"),
+    ).toThrow(/platforms/);
+    expect(() =>
+      validateManifest({ ...manifest, platforms: ["android"] }, "example"),
+    ).toThrow(/platforms/);
+    expect(() =>
+      validateManifest(
+        { ...manifest, platforms: ["macos", "windows"] },
+        "example",
+      ),
+    ).not.toThrow();
   });
 
   it("builds a portable ZIP and injects its complete files manifest", async () => {
